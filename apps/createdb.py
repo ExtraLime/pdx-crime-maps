@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 #to initialize a postgres db in python
 import psycopg2
 from psycopg2 import sql
