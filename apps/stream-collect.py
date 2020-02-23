@@ -74,5 +74,5 @@ if __name__ == '__main__':
     auth.set_access_token(access_key, access_secret)
     sapi = tweepy.streaming.Stream(auth, pdx_listener)  
 
-    # locations is given as East, North GPS of lower left coordinate and East, North of upper right GPS. This filters tweets only with geotags
+    #filter by ems and police
     sapi.filter(follow=(['1602852614','1606472113']))
