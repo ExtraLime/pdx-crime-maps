@@ -1,0 +1,16 @@
+.leaflet-container {
+  width: 50%;
+  height: 50vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.dropdown {
+  margin-bottom: 2rem;
+}
