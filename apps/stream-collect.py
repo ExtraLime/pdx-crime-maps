@@ -40,6 +40,7 @@ class PdxCrimeListener(tweepy.streaming.StreamListener):
 
     def __init__(self):
         self.count = 0
+        print("Collecting")
 
     def on_data(self, data):
         try:
@@ -56,12 +57,13 @@ class PdxCrimeListener(tweepy.streaming.StreamListener):
             conn.commit()
             self.count+=1
             print(data['text'])
-            if self.count<100:
+	    #uncomment to limit to 100
+            '''if self.count<100:
                 return True
             else:
                 print(self.count)
                 print('Finished')
-                return False
+                return False'''
         except BaseException as e:
             print("Error on_data: %s" % str(e))
             return True
