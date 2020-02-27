@@ -15,6 +15,14 @@ with open('.creds/db-creds.json') as cred_data:
     DBPASSWORD = info['PASSWORD']
     DBPORT = info['PORT']
 
+#load API creds, set auth object
+with open('.creds/twitter-cred.json') as cred_data:
+    info = json.load(cred_data)
+    consumer_key = info['CONSUMER_KEY']
+    consumer_secret = info['CONSUMER_SECRET']
+    access_key = info['ACCESS_KEY']
+    access_secret = info['ACCESS_SECRET']
+
 # Connect to an existing database
 conn = psycopg2.connect(
         dbname=DBNAME,
