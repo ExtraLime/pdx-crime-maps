@@ -1,10 +1,36 @@
 #!/usr/bin/env python3
-
+import pandas as pd
+import numpy as np
 import tweepy 
 import json
 
+import geopy
+from geopy.geocoders import Nominatim
+
 import psycopg2
 from psycopg2 import sql
+
+#list of neighborhoods
+hoods = ['ALAMEDA', 'ARBOR LODGE', 'ARDENWALD-JOHNSON CREEK', 'ARGAY',
+ 'ARLINGTON HEIGHTS', 'ARNOLD CREEK', 'ASHCREEK', 'BEAUMONT-WILSHIRE',
+ 'BOISE', 'BRENTWOOD/ DARLINGTON', 'BRIDGETON', 'BRIDLEMILE',
+ 'BROOKLYN', 'BUCKMAN', 'CATHEDRAL PARK', 'CENTENNIAL', 'COLLINS VIEW',
+ 'CONCORDIA', 'CRESTON-KENILWORTH', 'CRESTWOOD', 'CULLY', 'PORTLAND DOWNTOWN',
+ 'DUNTHORPE', 'EAST COLUMBIA', 'EASTMORELAND', 'ELIOT', 'FAR SOUTHWEST',
+ 'FOREST PARK', 'FOSTER-POWELL', 'GLENFAIR', 'GOOSE HOLLOW', 'GRANT PARK',
+ 'HAYDEN ISLAND', 'HAYHURST', 'HAZELWOOD', 'HEALY HEIGHTS', 'HILLSDALE',
+ 'HILLSIDE', 'HOLLYWOOD', 'HOMESTEAD', 'HOSFORD-ABERNETHY', 'HUMBOLDT',
+ 'IRVINGTON', 'KENTON', 'KERNS', 'KING', 'LAURELHURST', 'LENTS', 'LINNTON',
+ 'LLOYD DISTRICT', 'MADISON SOUTH', 'MAPLEWOOD', 'MARKHAM', 'MARSHALL PARK',
+ 'MILL PARK', 'MONTAVILLA', 'MT SCOTT-ARLETA', 'MT TABOR', 'MULTNOMAH',
+ 'NORTH TABOR', 'NORTHWEST DISTRICT', 'NORTHWEST HEIGHTS', 'OLD TOWN/ CHINATOWN',
+ 'OVERLOOK', 'PARKROSE', 'PARKROSE HEIGHTS', 'PEARL', 'PIEDMONT', 'PLEASANT VALLEY',
+ 'PORTSMOUTH', 'POWELLHURST-GILBERT', 'REED', 'RICHMOND', 'ROSE CITY PARK',
+ 'ROSEWAY', 'RUSSELL', 'SABIN', 'SELLWOOD-MORELAND', 'SOUTH BURLINGAME',
+ 'SOUTH PORTLAND', 'SOUTH TABOR', 'SOUTHWEST HILLS', 'ST. JOHNS',
+ "SULLIVAN'S GULCH", 'SUMNER', 'SUNDERLAND', 'SUNNYSIDE', 'SYLVAN-HIGHLANDS',
+ 'UNIVERSITY PARK', 'VERNON', 'WEST PORTLAND PARK', 'WILKES', 'WOODLAND PARK',
+ 'WOODLAWN', 'WOODSTOCK']
 
 #load creds for DB
 with open('.creds/db-creds.json') as cred_data:
@@ -42,28 +68,59 @@ class PdxCrimeListener(tweepy.streaming.StreamListener):
         self.count = 0
         print("Collecting")
 
+    #stream_tweets from Portland,Or
+class PdxCrimeListener(tweepy.streaming.StreamListener):
+    def __init__(self):
+        self.count = 0
+
     def on_data(self, data):
         try:
             data = json.loads(data)
             tweet_id = data['id']
             entity = data['user']['name']
-            date = data['created_at']
+            date = pd.to_datetime(data['created_at']).tz_convert('America/Los_Angeles')
+            year, month, day, hour, minute = date.year,date.month,date.day,date.hour,date.minute
             text = data['text']
+            inctime = text[-13:-8]
+            cats = text.split('at')[0].strip().split(' - ')
+            category = cats[0]
+            subcat = 'N/A'
+            catstat = 'N/A'
+            if len(cats) == 3:
+                subcat = cats[1]
+                catstat = cats[2]
+            elif len(cats) == 2:
+                if cats[1] == 'COLD' or cats[1] == 'PRIORITY':
+                    catstat = cats[1]
+                else:
+                    subcat = cats[1]
             lat = data['geo']['coordinates'][0]
             lng = data['geo']['coordinates'][1]
-            category = text.split('at')[0].strip()
-            cur.execute("INSERT INTO twitter_query (tweet_id, entity, date, text, lat, lng, category) VALUES (%s, %s, %s, %s, %s, %s, %s)",
-                    (tweet_id, entity, str(date), text, lat, lng, category))
+            location = None
+            while location == None:
+                location = geolocator.reverse('{},{}'.format(lat,lng),timeout=None)
+                for i in location.address.split(','):
+                    item = i.strip().upper()
+                    print(item)
+                    print(item in hoods)
+                    if item in hoods:
+                        location = i.strip()
+                        break
+                    else:
+                        location = 'Unknown'
+                        
+            cur.execute("INSERT INTO twitter_query (tweet_id, entity, date, inctime, text, lat, lng, location, category, subcat, catstat, year, month, day, hour, minute) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                    (tweet_id, entity, str(date), inctime, text, lat, lng, location, category, subcat, catstat, year, month, day, hour, minute))
             conn.commit()
             self.count+=1
             print(data['text'])
-	    #uncomment to limit to 100
-            '''if self.count<100:
+            print(location)
+            if self.count<100:
                 return True
             else:
                 print(self.count)
                 print('Finished')
-                return False'''
+                return False
         except BaseException as e:
             print("Error on_data: %s" % str(e))
             return True
@@ -84,5 +141,5 @@ if __name__ == '__main__':
     auth.set_access_token(access_key, access_secret)
     sapi = tweepy.streaming.Stream(auth, pdx_listener)  
 
-    #filter by ems and police
+    # user ids to listen for
     sapi.filter(follow=(['1602852614','1606472113']))
