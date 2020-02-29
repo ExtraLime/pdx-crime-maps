@@ -32,13 +32,21 @@ cur.execute('''
     CREATE TABLE {} (
     tweet_id VARCHAR(5000)  PRIMARY KEY,
     entity VARCHAR (5000) NOT NULL,
-    date VARCHAR (50) NOT NULL,    
+    date VARCHAR (50) NOT NULL,
+    inctime VARCHAR (50) NOT NULL,
     text VARCHAR (5000) NOT NULL,
     lat VARCHAR (5000) NOT NULL,
     lng VARCHAR (5000) NOT NULL,
-    category VARCHAR (5000) NOT NULL);
+    location VARCHAR (5000) NOT NULL,
+    category VARCHAR (5000) NOT NULL,
+    subcat VARCHAR (5000) NOT NULL,
+    catstat VARCHAR (5000) NOT NULL,
+    year VARCHAR (5000) NOT NULL,
+    month VARCHAR (5000) NOT NULL,
+    day VARCHAR (5000) NOT NULL,
+    hour VARCHAR (5000) NOT NULL,
+    minute VARCHAR (5000) NOT NULL);
     '''.format(table_name))
-
 conn.commit()
 
 print('TABLE: {} \n Successfully Created'.format(table_name))
