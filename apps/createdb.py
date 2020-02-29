@@ -9,7 +9,7 @@ conn = psycopg2.connect(host="localhost", dbname="postgres",
                         user="admin", password="pdx-crime", port='5432')
 cursor = conn.cursor()
 query = ''' CREATE DATABASE {} ;'''
-name = 'pdxcrime'
+name = 'pdxcrime1'
 
 conn.autocommit = True
 cursor.execute(sql.SQL(query).format(
