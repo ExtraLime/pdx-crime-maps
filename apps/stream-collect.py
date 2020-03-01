@@ -49,6 +49,9 @@ with open('.creds/twitter-cred.json') as cred_data:
     access_key = info['ACCESS_KEY']
     access_secret = info['ACCESS_SECRET']
 
+#set geolocator creds
+geolocator = Nominatim(user_agent="extra_lime")
+
 # Connect to an existing database
 conn = psycopg2.connect(
         dbname=DBNAME,
@@ -67,11 +70,6 @@ class PdxCrimeListener(tweepy.streaming.StreamListener):
     def __init__(self):
         self.count = 0
         print("Collecting")
-
-    #stream_tweets from Portland,Or
-class PdxCrimeListener(tweepy.streaming.StreamListener):
-    def __init__(self):
-        self.count = 0
 
     def on_data(self, data):
         try:
@@ -101,8 +99,6 @@ class PdxCrimeListener(tweepy.streaming.StreamListener):
                 location = geolocator.reverse('{},{}'.format(lat,lng),timeout=None)
                 for i in location.address.split(','):
                     item = i.strip().upper()
-                    print(item)
-                    print(item in hoods)
                     if item in hoods:
                         location = i.strip()
                         break
@@ -114,7 +110,6 @@ class PdxCrimeListener(tweepy.streaming.StreamListener):
             conn.commit()
             self.count+=1
             print(data['text'])
-            print(location)
             if self.count<100:
                 return True
             else:
