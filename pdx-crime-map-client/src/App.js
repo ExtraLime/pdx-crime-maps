@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import * as crimeData from "./data/pdx-crime-data.json";
 import useDropdown from './useDropdown';
+import Chart from './Chart';
 import "./App.css";
 import { filteredOptions, crimeIcon, eventRenderer } from './Helper.js'
 
@@ -52,6 +53,7 @@ export default function App() {
           </Popup>
         )}
       </Map>
+      <Chart />
     </div>
   );
 }

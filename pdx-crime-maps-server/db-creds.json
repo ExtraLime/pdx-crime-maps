@@ -1,0 +1,7 @@
+{
+  "DBNAME": "pdxcrime",
+  "USER": "extralime",
+  "HOST": "35.225.164.144",
+  "PASSWORD": "pdx-crime",
+  "PORT": "5432"
+}
