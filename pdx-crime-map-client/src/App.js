@@ -6,6 +6,7 @@ import useDropdown1 from './dropdown1';
 import Chart1 from './Chart1.js';
 import Chart2 from './Chart2.js';
 import Chart3 from './Chart3.js';
+import OldChart from './OldChart.js';
 
 import "./App.css";
 import { filteredOptions, crimeIcon, eventRenderer } from './Helper.js'
@@ -57,18 +58,19 @@ export default function App() {
           </Popup>
         )}
       </Map>
-      <div class="chart-container" >
+      <div className="chart-container" >
         <h4>Overall Crime</h4>
       <EventDropdown /><Chart1 />
       </div>
-      <div class="chart-container">
+      <div className="chart-container">
         <h4>Crime by Neighborhood</h4>
       <EventDropdown /><Chart2 />
       </div>
-      <div class="chart-container">
+      <div className="chart-container">
         <h4>Neighborhood by Crime</h4>
       <EventDropdown /><Chart3 />
       </div>
+      <div><OldChart /></div>
     </div>
    
   );  

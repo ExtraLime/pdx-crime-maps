@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const db = require('./queries.js');
 const dotenv = require('dotenv');
 dotenv.config();
-const port = process.env.DB_PORT;
+const port = 5431;
 
 // Set up the express app
 const app = express();

@@ -26,7 +26,7 @@ export default class App extends React.Component {
           options={{
             title:{
               display:true,
-              text:'Portland Downtown',
+              text:'Vehicle Stolen',
               fontSize:20
             },
             legend:{

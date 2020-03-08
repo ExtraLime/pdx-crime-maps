@@ -30,11 +30,13 @@ pool.connect((err, client, release) => {
 })
 
 const getTweets = (request, response) => {
-  pool.query('SELECT * FROM twitter_query LIMIT 5;', (error, results) => {
+  pool.query("with t1 as (select count(location),location from twitter_query where entity like 'Portland Police log' and category like 'VEHICLE STOLEN' group by location order by 1 desc limit 6) select * from t1 where location NOT IN ('Unknown');", (error, results) => {
     if (error) {
       throw error
     }
+    
     response.status(200).json(results.rows)
+    
   })
 }
 
