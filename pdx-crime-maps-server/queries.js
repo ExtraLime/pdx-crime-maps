@@ -29,7 +29,7 @@ pool.connect((err, client, release) => {
   })
 })
 
-const getTweets = (request, response) => {
+const getStolenVehicleTweets = (request, response) => {
   pool.query("with t1 as (select count(location),location from twitter_query where entity like 'Portland Police log' and category like 'VEHICLE STOLEN' group by location order by 1 desc limit 6) select * from t1 where location NOT IN ('Unknown');", (error, results) => {
     if (error) {
       throw error
@@ -42,5 +42,5 @@ const getTweets = (request, response) => {
 
 
 module.exports = {
-  getTweets,
+  getStolenVehicleTweets,
 } 

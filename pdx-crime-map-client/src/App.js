@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import * as crimeData from "./data/pdx-crime-data.json";
 import useDropdown from './useDropdown';
-import useDropdown1 from './dropdown1';
-import Chart1 from './Chart1.js';
-import Chart2 from './Chart2.js';
-import Chart3 from './Chart3.js';
-import OldChart from './OldChart.js';
+import BarChart from './BarChart';
+import axios from 'axios';
 
 import "./App.css";
-import { filteredOptions, crimeIcon, eventRenderer } from './Helper.js'
+import { filteredOptions, crimeIcon, eventRenderer, stolenVehicleChartData } from './Helper.js'
 
 export default function App() {
   const [activeCrime, setCrime] = useState(null);
   const [event, EventDropdown] = useDropdown("Crime", "All", filteredOptions);
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios(
+        'http://localhost:5431/tweets',
+      );
+      setData(result.data);
+    }
+    fetchData();
+  }, []);
+
+  console.log(stolenVehicleChartData(data))
 
   // Dark Mode "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
 
@@ -58,20 +68,10 @@ export default function App() {
           </Popup>
         )}
       </Map>
-      <div className="chart-container" >
-        <h4>Overall Crime</h4>
-      <EventDropdown /><Chart1 />
-      </div>
-      <div className="chart-container">
-        <h4>Crime by Neighborhood</h4>
-      <EventDropdown /><Chart2 />
-      </div>
-      <div className="chart-container">
-        <h4>Neighborhood by Crime</h4>
-      <EventDropdown /><Chart3 />
-      </div>
-      <div><OldChart /></div>
+
+      <BarChart data={stolenVehicleChartData(data)}
+                text={stolenVehicleChartData(data).datasets[0].label}
+        />
     </div>
-   
   );  
 }

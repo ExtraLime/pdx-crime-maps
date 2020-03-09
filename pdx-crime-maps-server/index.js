@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
   res.send({ message: 'endpoint working' });
 });
 
-app.get('/tweets', cors(corsOptions), db.getTweets);
+app.get('/tweets', cors(corsOptions), db.getStolenVehicleTweets);
 
 app.listen(port, () => {
   console.log(`Server running at: http://localhost:${port}/`);
