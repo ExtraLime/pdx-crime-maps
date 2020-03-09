@@ -40,7 +40,19 @@ const getStolenVehicleTweets = (request, response) => {
   })
 }
 
+const getAllMapTweets = (request, response) => {
+  pool.query("SELECT * FROM twitter_query limit 100", (error, results) => {
+    if (error) {
+      throw error
+    }
+    
+    response.status(200).json(results.rows)
+    
+  })
+}
+
 
 module.exports = {
   getStolenVehicleTweets,
+  getAllMapTweets,
 } 
