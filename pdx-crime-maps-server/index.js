@@ -27,6 +27,7 @@ app.get('/', (req, res) => {
 
 app.get('/tweets', cors(corsOptions), db.getStolenVehicleTweets);
 app.get('/map-tweets', cors(corsOptions), db.getAllMapTweets);
+app.get('/:crime', cors(corsOptions), db.getCrimeTweets);
 
 app.listen(port, () => {
   console.log(`Server running at: http://localhost:${port}/`);

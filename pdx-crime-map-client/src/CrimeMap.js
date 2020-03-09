@@ -5,7 +5,6 @@ const CrimeMap = (props) => {
   const { crimeData, eventRenderer, event, crimeIcon } = props;
   const [activeCrime, setCrime] = useState(null);
 
-
   return (
       <Map center={[45.523064,-122.676483]} zoom={12}>
         <TileLayer
