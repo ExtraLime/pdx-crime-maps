@@ -24,3 +24,4 @@ export const categories = ['ACCIDENT',
 'UNWANTED PERSON',
 'VANDALISM',
 'VEHICLE STOLEN'];
+

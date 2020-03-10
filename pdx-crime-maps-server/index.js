@@ -24,10 +24,13 @@ app.use(logger('dev'));
 app.get('/', (req, res) => {
   res.send({ message: 'endpoint working' });
 });
-
-app.get('/tweets', cors(corsOptions), db.getStolenVehicleTweets);
+app.get('/inithood', cors(corsOptions), db.getStartHood);
+app.get('/initcrime', cors(corsOptions), db.getInitCrimeTweets);
 app.get('/map-tweets', cors(corsOptions), db.getAllMapTweets);
 app.get('/:crime', cors(corsOptions), db.getCrimeTweets);
+app.get('/:hood', cors(corsOptions), db.getHoodTweets);
+
+
 
 app.listen(port, () => {
   console.log(`Server running at: http://localhost:${port}/`);
