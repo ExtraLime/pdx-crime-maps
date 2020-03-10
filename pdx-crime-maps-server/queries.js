@@ -31,7 +31,7 @@ pool.connect((err, client, release) => {
 
 // graph uses this if crime = All *change to however many tweets you want to show when all is selected
 const getStolenVehicleTweets = (request, response) => {
-  pool.query("with t1 as (select count(location),location from twitter_query where entity like 'Portland Police log' and category like 'VEHICLE STOLEN' group by location order by 1 desc limit 6) select * from t1 where location NOT IN ('Unknown');", (error, results) => {
+  pool.query("with t1 as (select count(location),location from twitter_query where entity like 'Portland Police log' group by location order by 1 desc limit 6) select * from t1 where location NOT IN ('Unknown');", (error, results) => {
     if (error) {
       throw error
     }
@@ -54,7 +54,7 @@ const getCrimeTweets = (request, response) => {
 }
 
 const getAllMapTweets = (request, response) => {
-  pool.query("SELECT * FROM twitter_query limit 100", (error, results) => {
+  pool.query("SELECT * FROM twitter_query order by tweet_id desc limit 100", (error, results) => {
     if (error) {
       throw error
     }
