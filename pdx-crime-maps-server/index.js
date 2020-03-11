@@ -24,11 +24,11 @@ app.use(logger('dev'));
 app.get('/', (req, res) => {
   res.send({ message: 'endpoint working' });
 });
-app.get('/inithood', cors(corsOptions), db.getStartHood);
+app.get('/neighborhood/inithood', cors(corsOptions), db.getStartHood);
 app.get('/initcrime', cors(corsOptions), db.getInitCrimeTweets);
 app.get('/map-tweets', cors(corsOptions), db.getAllMapTweets);
 app.get('/:crime', cors(corsOptions), db.getCrimeTweets);
-app.get('/:hood', cors(corsOptions), db.getHoodTweets);
+app.get('/neighborhood/:hood', cors(corsOptions), db.getHoodTweets);
 
 
 

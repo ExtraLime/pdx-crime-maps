@@ -65,6 +65,7 @@ const getAllMapTweets = (request, response) => {
 }
 
 const getHoodTweets = (request, response) => {
+  console.log(request.params)
   const hood = request.params.hood;
   pool.query(`with t1 as (select count(category),category from twitter_query where entity like 'Portland Police log' and location like '${hood}' group by category order by 1 desc limit 6) select * from t1 where category NOT IN ('Unknown');`, (error, results) => {
     if (error) {
