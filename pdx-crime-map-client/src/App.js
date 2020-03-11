@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import useDropdown from './useDropdown';
 import BarChart from './BarChart';
 import CrimeMap from './CrimeMap';
+import ChoroplethMap from './Choropleth';
+import pdxData from './data/pdx_data.js';
 import "./App.css";
 import { filteredEntityOptions, crimeIcon, eventRenderer, cChartData, nChartData,  } from './Helper.js';
 import { categories } from './data/categories';
@@ -23,10 +25,6 @@ export default function App() {
     fetchNData(setNChartData, hood);
   },[crime, hood]);
 
-  console.log(cChartData(crimeChartData))
-  console.log(nChartData(hoodChartData))
-
-
   // Dark Mode "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
 
   return (
@@ -46,7 +44,7 @@ export default function App() {
       <BarChart data={nChartData(hoodChartData, hood)}
                 text={nChartData(hoodChartData, hood).datasets[0].label}
         />
-      
+      <ChoroplethMap geojson={pdxData()}/>
     </div>
   );  
 }

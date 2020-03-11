@@ -18,13 +18,11 @@ export async function fetchData(setData, crime) {
 }
 
 export async function fetchNData(setNData, hood) {
-  console.log(hood)
   if (hood === "All") {
     hood = "inithood"
   }
   const result = await axios(
     `http://localhost:5431/neighborhood/${hood}`,
   );
-  console.log(result.data)
   setNData(result.data);
 }
