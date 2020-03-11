@@ -7,7 +7,7 @@ import { filteredEntityOptions, crimeIcon, eventRenderer, cChartData, nChartData
 import { categories } from './data/categories';
 import { hoods } from './data/hoods';
 
-import { fetchMapData, fetchData, fetchNData } from './AsyncHelpers.js'
+import { fetchMapData, fetchData, fetchNData, fetchChloroMapData } from './AsyncHelpers.js'
 
 export default function App() {
   const [crimeChartData, setCrimeChartData] = useState([]);
@@ -16,11 +16,13 @@ export default function App() {
   const [crime, CrimeDropdown] = useDropdown("Crime", "All", categories);
   const [hood, NeighborhoodDropdown] = useDropdown("Neighborhood", "All", hoods);
   const [mapData, setMapData] = useState([]);
+  const [cMapData, setCMapData] = useState([]);
 
   useEffect(() => {
     fetchMapData(setMapData);
     fetchData(setCrimeChartData, crime);
     fetchNData(setNChartData, hood);
+    fetchChloroMapData(setCMapData, crime);
   },[crime, hood]);
 
   console.log(cChartData(crimeChartData))

@@ -28,3 +28,14 @@ export async function fetchNData(setNData, hood) {
   console.log(result.data)
   setNData(result.data);
 }
+
+export async function fetchChloroMapData(setCMapData, crime) {
+  console.log(crime)
+  if (crime === "All") {
+    crime = "chlorodata"
+  }
+  const result = await axios(
+    `http://localhost:5431/chloro/${crime}`,
+  );
+  setCMapData(result.data);
+}
