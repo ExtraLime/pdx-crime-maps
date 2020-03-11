@@ -29,6 +29,8 @@ app.get('/initcrime', cors(corsOptions), db.getInitCrimeTweets);
 app.get('/map-tweets', cors(corsOptions), db.getAllMapTweets);
 app.get('/:crime', cors(corsOptions), db.getCrimeTweets);
 app.get('/neighborhood/:hood', cors(corsOptions), db.getHoodTweets);
+app.get('/chloro/chlorodata', cors(corsOptions), db.getInitChloroTweets);
+app.get('/chloro/:crime', cors(corsOptions), db.getChloroTweets);
 
 
 
