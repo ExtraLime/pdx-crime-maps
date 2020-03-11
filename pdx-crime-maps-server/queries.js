@@ -67,7 +67,7 @@ const getAllMapTweets = (request, response) => {
 const getHoodTweets = (request, response) => {
   console.log(request.params)
   const hood = request.params.hood;
-  pool.query(`with t1 as (select count(category),category from twitter_query where entity like 'Portland Police log' and location like '${hood}' group by category order by 1 desc limit 6) select * from t1 where category NOT IN ('Unknown');`, (error, results) => {
+  pool.query(`with t1 as (select count(category),category from twitter_query where entity like 'Portland Police log' and location like '${hood}' group by category order by 1 desc limit 5) select * from t1 where category NOT IN ('Unknown');`, (error, results) => {
     if (error) {
       throw error
     }
@@ -88,10 +88,33 @@ const getStartHood = (request, response) => {
   })
 }
 
+const getInitChloroTweets = (request, response) => {
+  pool.query(`with t1 as (select count(location),location from twitter_query  where entity like 'Portland Police log' group by location order by 1 desc )  select * from t1 where location NOT IN ('Unknown')`, (error, results) => {
+    if (error) {
+      throw error
+    }    
+    response.status(200).json(results.rows)
+
+  })
+}
+
+const getChloroTweets = (request, response) => {
+  const crime = request.params.crime;
+  pool.query(`with t1 as (select count(location),location from twitter_query  where entity like 'Portland Police log' and category like '${crime}' group by location order by 1 desc )  select * from t1 where location NOT IN ('Unknown')`, (error, results) => {
+    if (error) {
+      throw error
+    }    
+    response.status(200).json(results.rows)
+
+  })
+}
+
 module.exports = {
   getInitCrimeTweets,
   getAllMapTweets,
   getCrimeTweets,
   getHoodTweets,
   getStartHood,
+  getInitChloroTweets,
+  getChloroTweets,
 } 
