@@ -3,11 +3,13 @@ import useDropdown from './useDropdown';
 import BarChart from './BarChart';
 import CrimeMap from './CrimeMap';
 import ChoroplethMap from './Choropleth';
-import pdxData from './data/pdx_data.js';
+// import pdxData from './data/pdx_data.js';
 import "./App.css";
 import { filteredEntityOptions, crimeIcon, eventRenderer, cChartData, nChartData,  } from './Helper.js';
 import { categories } from './data/categories';
 import { hoods } from './data/hoods';
+import geo from './data/geo_json';
+import { newGeo } from './data/update_geojson';
 
 import { fetchMapData, fetchData, fetchNData, fetchChloroMapData } from './AsyncHelpers.js'
 
@@ -46,7 +48,7 @@ export default function App() {
       <BarChart data={nChartData(hoodChartData, hood)}
                 text={nChartData(hoodChartData, hood).datasets[0].label}
         />
-      <ChoroplethMap geojson={pdxData()}/>
+      <ChoroplethMap geojson={newGeo(geo, cMapData)}/>
     </div>
   );  
 }
