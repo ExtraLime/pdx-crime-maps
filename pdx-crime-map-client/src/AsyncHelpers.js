@@ -27,13 +27,13 @@ export async function fetchNData(setNData, hood) {
   setNData(result.data);
 }
 
-export async function fetchChloroMapData(setCMapData, crime) {
+export async function fetchChoroMapData(setCMapData, crime) {
   console.log(crime)
   if (crime === "All") {
-    crime = "chlorodata"
+    crime = "chorodata"
   }
   const result = await axios(
-    `http://localhost:5431/chloro/${crime}`,
+    `http://localhost:5431/choro/${crime}`,
   );
   setCMapData(result.data);
 }

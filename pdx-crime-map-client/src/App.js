@@ -11,7 +11,7 @@ import { hoods } from './data/hoods';
 import geo from './data/geo_json';
 import { newGeo } from './data/update_geojson';
 
-import { fetchMapData, fetchData, fetchNData, fetchChloroMapData } from './AsyncHelpers.js'
+import { fetchMapData, fetchData, fetchNData, fetchChoroMapData } from './AsyncHelpers.js'
 
 export default function App() {
   const [crimeChartData, setCrimeChartData] = useState([]);
@@ -26,7 +26,7 @@ export default function App() {
     fetchMapData(setMapData);
     fetchData(setCrimeChartData, crime);
     fetchNData(setNChartData, hood);
-    fetchChloroMapData(setCMapData, crime);
+    fetchChoroMapData(setCMapData, crime);
   },[crime, hood]);
 
   // Dark Mode "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"

@@ -88,7 +88,7 @@ const getStartHood = (request, response) => {
   })
 }
 
-const getInitChloroTweets = (request, response) => {
+const getInitChoroTweets = (request, response) => {
   pool.query(`with t1 as (select count(location),location from twitter_query  where entity like 'Portland Police log' group by location order by 1 desc )  select * from t1 where location NOT IN ('Unknown')`, (error, results) => {
     if (error) {
       throw error
@@ -98,7 +98,7 @@ const getInitChloroTweets = (request, response) => {
   })
 }
 
-const getChloroTweets = (request, response) => {
+const getChoroTweets = (request, response) => {
   const crime = request.params.crime;
   pool.query(`with t1 as (select count(location),location from twitter_query  where entity like 'Portland Police log' and category like '${crime}' group by location order by 1 desc )  select * from t1 where location NOT IN ('Unknown')`, (error, results) => {
     if (error) {
@@ -115,6 +115,6 @@ module.exports = {
   getCrimeTweets,
   getHoodTweets,
   getStartHood,
-  getInitChloroTweets,
-  getChloroTweets,
+  getInitChoroTweets,
+  getChoroTweets,
 } 
