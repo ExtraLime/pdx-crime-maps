@@ -25,8 +25,10 @@ function style(feature) {
 }
 
 const nPopup = (feature, layer) => {
-  console.log(feature.properties.count);
-  return layer.bindPopup()
+  //console.log(feature.properties.MAPLABEL);
+  //console.log(feature.properties.count)
+  
+  return layer.bindPopup(feature.properties.MAPLABEL.toString())
   //maybe count?
 }
 
@@ -54,7 +56,8 @@ const choroplethMap = (geojson) => {
           steps={7}
           mode='e'
           style={(feature) => style(feature)}
-          onEachFeature={(feature, layer) => 'n : cnt'.replace('n',nPopup(feature, layer).repl).replace('cnt',"COUNT")}
+          onEachFeature={(feature, layer) => nPopup(feature, layer)}
+          identity={(feature) => feature.properties.count}
         />
       </Map>
     )

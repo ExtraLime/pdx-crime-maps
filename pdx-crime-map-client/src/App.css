@@ -1,6 +1,7 @@
 .leaflet-container {
   width: 75%;
   height: 60vh;
+  margin-bottom: 2rem;
 }
 
 .container {
@@ -13,7 +14,7 @@
 }
 
 .dropdown {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .chart-container {

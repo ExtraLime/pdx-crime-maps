@@ -14,7 +14,8 @@ export function newGeo (geo, updates) {
         //I don't know how to check for array membership or get object keys 
         if(hoodNames.includes(mapLabel)) {
             geo['features'][i]['properties']['count'] = hoodCount[mapLabel];
-        }
+        }else {
+            geo['features'][i]['properties']['count']= 0}
     }
     return geo
 };
