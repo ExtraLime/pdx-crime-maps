@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Choropleth from 'react-leaflet-choropleth';
+import hash from 'object-hash';
 import { Map, TileLayer } from 'react-leaflet';
 
 function getColor(c) {
@@ -24,24 +25,33 @@ function style(feature) {
   };
 }
 
-const nPopup = (feature, layer) => {
-  //console.log(feature.properties.MAPLABEL);
-  //console.log(feature.properties.count)
-  
-  return layer.bindPopup(feature.properties.MAPLABEL.toString())
-  //maybe count?
+const nPopup = (feature, layer) => layer.bindPopup(`${feature.properties.MAPLABEL} ${feature.properties.count}`)
+
+// const onEachFeatureData = (feature, layer) => {
+//   layer.on({
+//     click: function(event) {
+//       var popup = L.popup()
+//           .setLatLng(event.latlng)
+//           .setContent(nPopup(feature))
+//           .openOn(layer._map);
+
+//         }
+//   });
+// }
+
+const getIdentity = (feature) => {
+  return hash(feature);   // generates unique hash from the feature object using object-hash library
 }
 
-const choroplethMap = (geojson) => {
-  console.log(geojson.geojson.features)
-  function getCounts(geoj) {
-    let cntList = []
-    for (let i=0; i<geoj.geojson.features.length;i++){
-      cntList.push(geoj.geojson.features[i].properties.count.toString())      
-    }return cntList
-  }
-  const counts = getCounts(geojson)
-  console.log(counts)
+const ChoroplethMap = (props) => {
+  const [mapData, setMapData] = useState(props);
+
+  useEffect(() => {
+    if (mapData.geojson !== props) {
+      setMapData(props);
+    }
+  }, [mapData, props]);
+
   return (
       <Map center={[45.523064,-122.676483]} zoom={11}>
         <TileLayer
@@ -49,18 +59,18 @@ const choroplethMap = (geojson) => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
         <Choropleth
-          data={{type: 'FeatureCollection', features: geojson.geojson.features}}
-          valueProperty={(feature) => feature.properties.count }
+          identity={(feature) => getIdentity(feature)}
+          data={mapData.geojson}
+          valueProperty={feature => feature.properties.count }
           visible={''}
           scale={['#b3cde0', '#011f4b']}
           steps={7}
           mode='e'
           style={(feature) => style(feature)}
           onEachFeature={(feature, layer) => nPopup(feature, layer)}
-          identity={(feature) => feature.properties.count}
         />
       </Map>
     )
   }
 
-export default choroplethMap;
+export default ChoroplethMap;

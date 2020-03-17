@@ -2,6 +2,8 @@ const { Pool, Client } = require('pg');
 const dotenv = require('dotenv');
 dotenv.config();
 const creds = require('./db-creds.json');
+const { newGeo } = require('./newGeo.js');
+const geo = require('./data/geo-json.json');
 
 // console.log(process.env);
 
@@ -93,7 +95,11 @@ const getInitChoroTweets = (request, response) => {
     if (error) {
       throw error
     }    
-    response.status(200).json(results.rows)
+    const result = results.rows
+    const formatted = newGeo(geo, result)
+    
+    response.status(200).json(formatted)
+    // console.log(formatted);
 
   })
 }
@@ -103,8 +109,13 @@ const getChoroTweets = (request, response) => {
   pool.query(`with t1 as (select count(location),location from twitter_query  where entity like 'Portland Police log' and category like '${crime}' group by location order by 1 desc )  select * from t1 where location NOT IN ('Unknown')`, (error, results) => {
     if (error) {
       throw error
-    }    
-    response.status(200).json(results.rows)
+    }
+    const result = results.rows;
+    const formatted = newGeo(geo, result)
+    console.log(formatted.features[0].properties);
+
+    
+    response.status(200).json(formatted)
 
   })
 }

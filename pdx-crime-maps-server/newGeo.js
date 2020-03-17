@@ -1,4 +1,4 @@
-export function newGeo (geo, updates) {
+function newGeo (geo, updates) {
 // create a new object with each hood:count
     const hoodCount = {}
     const hoodNames = []
@@ -19,3 +19,7 @@ export function newGeo (geo, updates) {
     }
     return geo
 };
+
+module.exports = {
+  newGeo
+}
