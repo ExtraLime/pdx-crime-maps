@@ -17,10 +17,10 @@
   margin-bottom: 1rem;
   margin-left:.5rem;
   color:white;
-  background:darkblue;
-  border-radius: 1pc;
-  border: 6px solid transparent;
-  border-color: darkblue transparent transparent transparent;
+  background:dodgerblue;
+  border-radius: 60px;
+  border: 4px solid;
+  border-color: transparent;
 }
 
 .chart-container {
