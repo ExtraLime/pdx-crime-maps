@@ -7,10 +7,20 @@
 .container {
   background-color: black;
   display: flex;
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: 1fr, 1fr;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 2rem;
+  grid-gap: 10px;
+  grid-template-areas:
+  "EventDropdown EventDropdown"  
+  "CrimeMap CrimeMap"
+  "CrimeDropdown CrimeDropdown "
+  "CBarChart ChoroplethMap"
+  "NeighborhoodDropdown NeighborhoodDropdown"
+  "NBarChart NBarChart";
 }
 
 .dropdown {

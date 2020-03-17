@@ -48,11 +48,12 @@ export default function App() {
       <BarChart data={cChartData(crimeChartData, crime)}
                 text={cChartData(crimeChartData, crime).datasets[0].label}
         />
+      {cMapData && <ChoroplethMap geojson={cMapData}/>}
       <NeighborhoodDropdown />
       <BarChart data={nChartData(hoodChartData, hood)}
                 text={nChartData(hoodChartData, hood).datasets[0].label}
         />
-      {cMapData && <ChoroplethMap geojson={cMapData}/>}
+      
     </div>
   );  
 }
