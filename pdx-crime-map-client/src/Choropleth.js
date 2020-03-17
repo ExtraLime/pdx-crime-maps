@@ -24,24 +24,22 @@ function style(feature) {
   };
 }
 
-const nPopup = (feature, layer) => {
+// const count = (geojson) => {
+
+//   const counted = geojson.geojson.features.map(item => item.properties.count);
+//   return counted;
+// }
+
+async function nPopup(feature, layer) {
+  if(feature.properties.count === 0) {
+    return await console.log(feature.properties.count);
+  } else {
+    return layer.bindPopup(`${feature.properties.MAPLABEL} ${feature.properties.count}`)
+  }
   //console.log(feature.properties.MAPLABEL);
-  //console.log(feature.properties.count)
-  
-  return layer.bindPopup(feature.properties.MAPLABEL.toString())
-  //maybe count?
 }
 
 const choroplethMap = (geojson) => {
-  console.log(geojson.geojson.features)
-  function getCounts(geoj) {
-    let cntList = []
-    for (let i=0; i<geoj.geojson.features.length;i++){
-      cntList.push(geoj.geojson.features[i].properties.count.toString())      
-    }return cntList
-  }
-  const counts = getCounts(geojson)
-  console.log(counts)
   return (
       <Map center={[45.523064,-122.676483]} zoom={11}>
         <TileLayer
@@ -57,7 +55,6 @@ const choroplethMap = (geojson) => {
           mode='e'
           style={(feature) => style(feature)}
           onEachFeature={(feature, layer) => nPopup(feature, layer)}
-          identity={(feature) => feature.properties.count}
         />
       </Map>
     )

@@ -8,8 +8,6 @@ import "./App.css";
 import { filteredEntityOptions, crimeIcon, eventRenderer, cChartData, nChartData,  } from './Helper.js';
 import { categories } from './data/categories';
 import { hoods } from './data/hoods';
-import geo from './data/geo_json';
-import { newGeo } from './data/update_geojson';
 
 import { fetchMapData, fetchData, fetchNData, fetchChoroMapData } from './AsyncHelpers.js'
 
@@ -20,14 +18,19 @@ export default function App() {
   const [crime, CrimeDropdown] = useDropdown("Crime", "All", categories);
   const [hood, NeighborhoodDropdown] = useDropdown("Neighborhood", "All", hoods);
   const [mapData, setMapData] = useState([]);
-  const [cMapData, setCMapData] = useState([]);
+  const [cMapData, setCMapData] = useState(null);
 
   useEffect(() => {
     fetchMapData(setMapData);
     fetchData(setCrimeChartData, crime);
     fetchNData(setNChartData, hood);
-    fetchChoroMapData(setCMapData, crime);
   },[crime, hood]);
+  
+  useEffect(() => {
+    fetchChoroMapData(setCMapData, crime);
+  }, [crime])
+
+  console.log(cMapData)
 
   // Dark Mode "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
 
@@ -48,7 +51,7 @@ export default function App() {
       <BarChart data={nChartData(hoodChartData, hood)}
                 text={nChartData(hoodChartData, hood).datasets[0].label}
         />
-      <ChoroplethMap geojson={newGeo(geo, cMapData)}/>
+      {cMapData && <ChoroplethMap geojson={cMapData}/>}
     </div>
   );  
 }

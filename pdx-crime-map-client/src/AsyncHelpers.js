@@ -28,7 +28,6 @@ export async function fetchNData(setNData, hood) {
 }
 
 export async function fetchChoroMapData(setCMapData, crime) {
-  console.log(crime)
   if (crime === "All") {
     crime = "chorodata"
   }
