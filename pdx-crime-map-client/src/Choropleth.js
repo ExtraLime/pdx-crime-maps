@@ -11,7 +11,8 @@ function getColor(c) {
          c > 20   ? '#FD8D3C' :
          c > 10   ? '#FEB24C' :
          c > 5   ? '#FED976' :
-                    '#FFEDA0';
+         c = 0 ?  '#FFEDA0':
+                    '#FFFFFF';
 }
 
 function style(feature) {
@@ -24,23 +25,47 @@ function style(feature) {
       fillOpacity: 0.7
   };
 }
+//not used
+//const nPopup = (feature, layer) => layer.bindPopup(`${feature.properties.MAPLABEL} ${feature.properties.count}`)
 
-const nPopup = (feature, layer) => layer.bindPopup(`${feature.properties.MAPLABEL} ${feature.properties.count}`)
+function highlightFeature(e) {
+  var layer = e.target;
 
-// const onEachFeatureData = (feature, layer) => {
-//   layer.on({
-//     click: function(event) {
-//       var popup = L.popup()
-//           .setLatLng(event.latlng)
-//           .setContent(nPopup(feature))
-//           .openOn(layer._map);
+  layer.setStyle({
+      weight: 5,
+      color: '#666',
+      dashArray: '',
+      fillOpacity: 0.7
+  });
+  layer.bindPopup(`${layer.feature.properties.MAPLABEL} ${layer.feature.properties.count}`)
+}
 
-//         }
-//   });
-// }
+function resetHighlight(e) {
+  var layer = e.target;
+
+  layer.setStyle({
+      weight: 0,
+      color: '#666',
+      dashArray: '',
+      fillOpacity: 0.7
+  });
+
+}
+
+function popupToFeature(e) {
+  e.target.bindPopup(`${e.target.feature.properties.MAPLABEL} ${e.target.feature.properties.count}`);
+}
 
 const getIdentity = (feature) => {
   return hash(feature);   // generates unique hash from the feature object using object-hash library
+}
+
+function onEachFeature(feature, layer) {
+  layer.on({
+      mouseover: highlightFeature,
+      mouseout: resetHighlight,
+      click: popupToFeature,
+  });
 }
 
 const ChoroplethMap = (props) => {
@@ -67,7 +92,7 @@ const ChoroplethMap = (props) => {
           steps={7}
           mode='e'
           style={(feature) => style(feature)}
-          onEachFeature={(feature, layer) => nPopup(feature, layer)}
+          onEachFeature={(feature, layer) => onEachFeature(feature, layer)}
         />
       </Map>
     )
