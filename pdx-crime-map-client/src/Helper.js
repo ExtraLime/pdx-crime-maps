@@ -134,7 +134,7 @@ export const cChartData = (data, crime) => {
           datasets: [
             {
               label: crime,
-              backgroundColor: ['#7a4d5c','#d9b53f','#5a784b','#4c6a7a','#ad826d'],
+              backgroundColor: ['#030caa','#0410e1','#222efb','#5962fc','#9196fd'],
               borderColor: 'rgba(0,0,0,1)',
               borderWidth: 2,
               data: data.map(item => item.count)
@@ -147,7 +147,7 @@ export const nChartData = (data, hood) => {
           datasets: [
             {
               label: hood,
-              backgroundColor: ['#7a4d5c','#d9b53f','#5a784b','#4c6a7a','#ad826d'],
+              backgroundColor: ['#030caa','#0410e1','#222efb','#5962fc','#9196fd'],
               borderColor: 'rgba(0,0,0,1)',
               borderWidth: 2,
               data: data.map(item => item.count)
@@ -160,7 +160,7 @@ export const tChartData = (data, crime) => {
           datasets: [
             {
               label: crime,
-              backgroundColor: ['#7a4d5c','#d9b53f','#5a784b','#4c6a7a','#ad826d'],
+              backgroundColor: ['#030caa','#0410e1','#222efb','#5962fc','#9196fd'],
               borderColor: 'rgba(0,0,0,1)',
               borderWidth: 2,
               data: data.map(item => item.count)
