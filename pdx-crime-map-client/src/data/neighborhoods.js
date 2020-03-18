@@ -1,4 +1,4 @@
-export const hoods = ['Alameda',
+const neighborhoods = ['Alameda',
 'Arbor Lodge',
 'Ardenwald-Johnson Creek',
 'Arlington Heights',
@@ -92,3 +92,5 @@ export const hoods = ['Alameda',
 'Woodland Park',
 'Woodlawn',
 'Woodstock'];
+
+export default neighborhoods;

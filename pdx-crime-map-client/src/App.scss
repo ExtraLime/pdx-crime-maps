@@ -1,0 +1,49 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.leaflet-container {
+  width: 75%;
+  height: 60vh;
+  margin-bottom: 2rem;
+}
+
+// .container {
+//   background-color: black;
+//   display: flex;
+//   grid-template-rows: repeat(5, 1fr);
+//   grid-template-rows: 1fr, 1fr;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   margin-top: 2rem;
+//   grid-gap: 10px;
+//   grid-template-areas:
+//   "EventDropdown EventDropdown"  
+//   "CrimeMap CrimeMap"
+//   "CrimeDropdown CrimeDropdown "
+//   "CBarChart ChoroplethMap"
+//   "NeighborhoodDropdown NeighborhoodDropdown"
+//   "NBarChart NBarChart";
+// }
+
+// .dropdown {
+//   margin-bottom: 1rem;
+//   margin-left:.5rem;
+//   color:white;
+//   background:dodgerblue;
+//   border-radius: 60px;
+//   border: 4px solid;
+//   border-color: transparent;
+// }
+
+.chart-container {
+  position: relative;
+  justify-content:center; 
+  height:30vh; 
+  width:60vw;
+  padding-bottom:200px;
+  margin-bottom: 200px
+}

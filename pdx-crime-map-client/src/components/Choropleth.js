@@ -24,8 +24,6 @@ function style(feature) {
       fillOpacity: 0.7
   };
 }
-//not used
-//const nPopup = (feature, layer) => layer.bindPopup(`${feature.properties.MAPLABEL} ${feature.properties.count}`)
 
 function highlightFeature(e) {
   var layer = e.target;

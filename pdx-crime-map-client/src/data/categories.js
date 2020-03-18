@@ -1,4 +1,4 @@
-export const categories = ['ACCIDENT',
+const categories = ['ACCIDENT',
 'ANIMAL PROBLEM',
 'AREA CHECK',
 'ASSAULT',
@@ -25,3 +25,4 @@ export const categories = ['ACCIDENT',
 'VANDALISM',
 'VEHICLE STOLEN'];
 
+export default categories;

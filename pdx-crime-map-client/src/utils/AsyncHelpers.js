@@ -7,7 +7,7 @@ export async function fetchMapData(setMapData) {
   setMapData(result.data);
 }
 
-export async function fetchData(setData, crime) {
+export async function fetchCrimeChartData(setData, crime) {
   if (crime === "All") {
     crime = "initcrime"
   }
@@ -17,7 +17,7 @@ export async function fetchData(setData, crime) {
   setData(result.data);
 }
 
-export async function fetchNData(setNData, hood) {
+export async function fetchNeighborhoodsData(setNData, hood) {
   if (hood === "All") {
     hood = "inithood"
   }
@@ -27,7 +27,7 @@ export async function fetchNData(setNData, hood) {
   setNData(result.data);
 }
 
-export async function fetchChoroMapData(setCMapData, crime) {
+export async function fetchChoroplethMapData(setCMapData, crime) {
   if (crime === "All") {
     crime = "chorodata"
   }
