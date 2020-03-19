@@ -12,7 +12,7 @@ const BarChart = (props) => {
 
   return (
     <>
-      <div className="test">
+      <div className={`test ${type.toLowerCase()}`}>
         <SpecificChart
           data={data}
           width={300}

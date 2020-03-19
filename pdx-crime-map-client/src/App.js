@@ -39,7 +39,6 @@ export default function App() {
                 event={event} 
                 crimeIcon={crimeIcon} 
         />
-
       <CrimeDropdown />
       <BarChart data={choroplethChartData(crimeChartData, crime)}
                 text={choroplethChartData(crimeChartData, crime).datasets[0].label}
@@ -51,7 +50,6 @@ export default function App() {
                 text={neighborhoodsChartData(neighborhoodChartData, hood).datasets[0].label}
                 type="bar"
         />
-      
     </div>
   );  
 }

@@ -6,6 +6,8 @@ const CrimeMap = (props) => {
   const [activeCrime, setCrime] = useState(null);
 
   return (
+    <>
+      <div className="crime-map">
       <Map center={[45.523064,-122.676483]} zoom={12}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -44,6 +46,8 @@ const CrimeMap = (props) => {
           </Popup>
         )}
       </Map>
+      </div>
+    </>
   );
 }
 

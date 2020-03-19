@@ -75,23 +75,27 @@ const ChoroplethMap = (props) => {
   }, [mapData, props]);
 
   return (
-      <Map center={[45.523064,-122.676483]} zoom={11}>
-        <TileLayer
-          url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    <>
+      <div className="choropleth-container">
+        <Map center={[45.523064,-122.676483]} zoom={11}>
+          <TileLayer
+            url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            />
+          <Choropleth
+            identity={(feature) => getIdentity(feature)}
+            data={mapData.geojson}
+            valueProperty={feature => feature.properties.count }
+            visible={''}
+            scale={['#b3cde0', '#011f4b']}
+            steps={7}
+            mode='e'
+            style={(feature) => style(feature)}
+            onEachFeature={(feature, layer) => onEachFeature(feature, layer)}
           />
-        <Choropleth
-          identity={(feature) => getIdentity(feature)}
-          data={mapData.geojson}
-          valueProperty={feature => feature.properties.count }
-          visible={''}
-          scale={['#b3cde0', '#011f4b']}
-          steps={7}
-          mode='e'
-          style={(feature) => style(feature)}
-          onEachFeature={(feature, layer) => onEachFeature(feature, layer)}
-        />
-      </Map>
+        </Map>
+      </div>
+    </>
     )
   }
 
