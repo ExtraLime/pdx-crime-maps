@@ -8,13 +8,16 @@ export const crimeIcon = (crime) => crime.text.includes("MED")
 
 export const eventRenderer = (event, crime) => event === "All" ? crime : crime.entity.includes(event);
 
+const primaryChartColor = 'rgb(29, 145, 192)';
+
 export const choroplethChartData = (data, crime) => {
   return {labels: data.map(item => item.location),
           datasets: [
             {
               label: crime,
-              backgroundColor: ['#030caa','#0410e1','#222efb','#5962fc','#9196fd'],
-              borderColor: 'rgba(0,0,0,1)',
+              color: '#fff',
+              backgroundColor: primaryChartColor,
+              borderColor: primaryChartColor,
               borderWidth: 2,
               data: data.map(item => item.count)
             }
@@ -26,8 +29,8 @@ export const neighborhoodsChartData = (data, hood) => {
           datasets: [
             {
               label: hood,
-              backgroundColor: ['#030caa','#0410e1','#222efb','#5962fc','#9196fd'],
-              borderColor: 'rgba(0,0,0,1)',
+              backgroundColor: primaryChartColor,
+              borderColor: primaryChartColor,
               borderWidth: 2,
               data: data.map(item => item.count)
             }

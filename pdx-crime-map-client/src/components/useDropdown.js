@@ -5,24 +5,28 @@ const useDropdown = (label, defaultState, options) => {
 
   const id = `use-dropdown-${label.replace(" ", "").toLowerCase()}`;
   const Dropdown = () => (
-    <label htmlFor={id}>
-      {label}
-      <select
-        id={id}
-        value={state}
-        onChange={e => setState(e.target.value)}
-        onBlur={e => setState(e.target.value)}
-        disabled={options.length === 0}
-        className="dropdown"
-      >
-        <option>All</option>
-        {options.map(item => (
-          <option key={item} value={item}>
-            {item}
-          </option>
-        ))}
-      </select>
-    </label>
+    <>
+      <div className="dropdown-container">
+        <label htmlFor={id}>
+          {label}
+          <select
+            id={id}
+            value={state}
+            onChange={e => setState(e.target.value)}
+            onBlur={e => setState(e.target.value)}
+            disabled={options.length === 0}
+            className="dropdown"
+          >
+            <option>All</option>
+            {options.map(item => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+    </>
   );
 
   return [state, Dropdown, setState];

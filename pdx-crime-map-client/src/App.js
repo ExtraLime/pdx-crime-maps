@@ -43,11 +43,13 @@ export default function App() {
       <CrimeDropdown />
       <BarChart data={choroplethChartData(crimeChartData, crime)}
                 text={choroplethChartData(crimeChartData, crime).datasets[0].label}
+                type="horizontalBar"
         />
       {choroplethMapData && <ChoroplethMap geojson={choroplethMapData}/>}
       <NeighborhoodDropdown />
       <BarChart data={neighborhoodsChartData(neighborhoodChartData, hood)}
                 text={neighborhoodsChartData(neighborhoodChartData, hood).datasets[0].label}
+                type="bar"
         />
       
     </div>

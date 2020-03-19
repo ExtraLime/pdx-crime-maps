@@ -5,8 +5,6 @@ const creds = require('./db-creds.json');
 const { newGeo } = require('./newGeo.js');
 const geo = require('./data/geo-json.json');
 
-// console.log(process.env);
-
 const pool = new Pool({
   user: creds.USER,
   host: creds.HOST,
@@ -31,7 +29,6 @@ pool.connect((err, client, release) => {
   })
 })
 
-// graph uses this if crime = All *change to however many tweets you want to show when all is selected
 const getInitCrimeTweets = (request, response) => {
   pool.query("with t1 as (select count(location),location from twitter_query where entity like 'Portland Police log' group by location order by 1 desc limit 6) select * from t1 where location NOT IN ('Unknown');", (error, results) => {
     if (error) {
@@ -98,7 +95,6 @@ const getInitChoroTweets = (request, response) => {
     const formatted = newGeo(geo, result)
     
     response.status(200).json(formatted)
-    // console.log(formatted);
 
   })
 }
@@ -111,8 +107,6 @@ const getChoroTweets = (request, response) => {
     }
     const result = results.rows;
     const formatted = newGeo(geo, result)
-    console.log(formatted.features[0].properties);
-
     
     response.status(200).json(formatted)
 
