@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: '*',
   optionsSuccessStatus: 200
 }
 
