@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const domain = '10.0.0.212'
+const domain = 'localhost'
 
 export async function fetchMapData(setMapData) {
   const result = await axios(
