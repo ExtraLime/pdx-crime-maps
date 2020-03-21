@@ -1,0 +1,28 @@
+server {                                                                                              │  3.41 KB   build/static/js/main.47c6b196.chunk.js
+        listen       80 default_server;                                                               │  1.07 KB   build/static/css/main.d363b3ea.chunk.css
+        listen       [::]:80 default_server;                                                          │  776 B     build/static/js/runtime-main.4a64ccfa.js
+        server_name  pdxcrimemap.net;                                                                 │
+        root /home/willdox7/pdx-crime-maps/pdx-crime-maps-server;                                     │The project was built assuming it is hosted at /.
+        index index.html index.htm                                                                    │You can control this with the homepage field in your package.json.
+                                                                                                      │
+        # Load configuration files for the default server block.                                      │The build folder is ready to be deployed.
+        include /etc/nginx/default.d/*.conf;                                                          │You may serve it with a static server:
+                                                                                                      │
+        location / {                                                                                  │  serve -s build
+                                                                                                      │
+                try_files $uri /index.html;                                                           │Find out more about deployment here:
+                                                                                                      │
+        }
+
+        location /api/ {                                                                              │
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;                          │The build folder is ready to be deployed.
+                proxy_set_header Host $http_host;                                                     │You may serve it with a static server:
+                proxy_set_header X-NginX-Proxy true;                                                  │
+                proxy_pass http://localhost:5431;                                                     │  serve -s build
+                proxy_http_version 1.1;                                                               │
+                proxy_set_header Upgrade $http_upgrade;                                               │Find out more about deployment here:
+                proxy_set_header Connection 'upgrade';                                                │
+                proxy_set_header Host $host;                                                          │  bit.ly/CRA-deploy
+                proxy_cache_bypass $http_upgrade;                                                     │
+                                                                                                      │Done in 14.30s.
+        }                                        
