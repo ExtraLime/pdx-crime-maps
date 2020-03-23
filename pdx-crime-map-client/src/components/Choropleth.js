@@ -4,13 +4,13 @@ import hash from 'object-hash';
 import { Map, TileLayer } from 'react-leaflet';
 
 function getColor(c) {
-  return c > 200 ? '#030caa' :
-         c > 100  ? '#0410e1' :
-         c > 50  ? '#222efb' :
-         c > 25  ? '#5962fc' :
-         c > 5   ? '#9196fd' :
-         c >= 1   ? '#c8cbfe' :
-         c === 0  ?  '#ffffff':
+  return c > 200 ? '#681740' :
+         c > 100  ? '#a8234c' :
+         c > 50  ? '#e3534c' :
+         c > 25  ? '#fa7c5a' :
+         c > 5   ? '#ffa874' :
+         c >= 1   ? '#ffd08e' :
+         c === 0  ?  '#95c22b':
                     '#FFFFFF';
 }
 
