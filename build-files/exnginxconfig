@@ -1,8 +1,8 @@
 server {                                                                                              │  3.41 KB   build/static/js/main.47c6b196.chunk.js
         listen       80 default_server;                                                               │  1.07 KB   build/static/css/main.d363b3ea.chunk.css
         listen       [::]:80 default_server;                                                          │  776 B     build/static/js/runtime-main.4a64ccfa.js
-        server_name  'yourdomain';                                                                 │
-        root 'path-to-root-folder';                                     │The project was built assuming it is hosted at /.
+        server_name  pdxcrimemap.net;                                                                 │
+        root 'location-of-build-files';                                     │The project was built assuming it is hosted at /.
         index index.html index.htm                                                                    │You can control this with the homepage field in your package.json.
                                                                                                       │
         # Load configuration files for the default server block.                                      │The build folder is ready to be deployed.

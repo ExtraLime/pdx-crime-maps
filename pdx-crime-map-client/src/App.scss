@@ -4,19 +4,79 @@
   box-sizing: border-box;
 }
 
+.dropdown {
+  margin-left: 2rem;  
+  }
+
 .container {
-  display: contents;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height:100%;
+  position: absolute;
+  display: grid;
+  grid-template-rows: repeat(1fr,8);
+  grid-template-columns: 1fr;
+  grid-gap: 0px;
+  grid-template-areas:
+    "Header"
+    "EventDropdown"  
+    "CrimeMap"
+    "CrimeDropdown"
+    "ChoroplethMap"
+    "CrimeBarChart"
+    "NeighborhoodDropdown"
+    "NeighborhoodBarChart";    
+  margin: 0px auto;
+  align-content: stretch;
+  object-fit:cover;
+}
+Header {
+  position:fixed;
+  z-index:5;
+  width:100%;
+  background: #000000;  
+  display: grid;   
+}
+
+.entity {
+  position:relative;
+  margin-top:100px;
+}
+
+.nav-li {
+  position:relative;  
+  float: right;
+  list-style-type: none;
+}
+
+.nav-li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.header-grid {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 
+  "header-logo main-nav";
+  align-content:stretch;
+  
+}
+
+.header-logo {
+  grid-area: "header-logo";
+  font-family: Arial;
+  text-align:right;
 }
 
 .leaflet-container {
   height: 75vh;
   width: 100%;
-  justify-content:center;  
+  justify-content:center;
+  position:relative;
+  z-index:-1;
+   
 }
 
 .crime-map {
@@ -25,6 +85,7 @@
   width: 100%;
   padding: 30px 40px 30px 40px;
   margin: 0px 0px 0px 0px;
+  
 }
 
 
@@ -34,6 +95,7 @@
   width: 100%;
   padding: 0px 40px 30px 40px;
   margin: 0px 0px 0px 0px;
+  
 }
 
 label {
@@ -101,12 +163,13 @@ select {
   @media screen and (min-width: 750px) {
 
     .container {
-      position: relative;
+      position: absolute;
       display: grid;
-      grid-template-rows: repeat(1fr,6 );
+      grid-template-rows: repeat(1fr,7);
       grid-template-columns: 1fr 1fr;
       grid-gap: 0px;
       grid-template-areas:
+        "Header Header"
         "EventDropdown EventDropdown"  
         "CrimeMap CrimeMap"
         "CrimeDropdown CrimeDropdown"
@@ -114,13 +177,64 @@ select {
         "NeighborhoodDropdown NeighborhoodDropdown"
         "NeighborhoodBarChart NeighborhoodBarChart";    
       margin: 0px auto;
-      justify-content: fill;
+      align-content: stretch;
       object-fit:cover;
+      width: 100%;
+    }
+    Header {
+      position:fixed;
+      z-index:5;
+      background: #000000;
+      grid-area: Header;
+      display: grid;
+      background: #000000;      
     }
 
-
     .entity {
-      grid-area: EventDropdown;  
+      grid-area: EventDropdown;
+      margin-top:50px;  
+    }
+
+    .main-nav {
+      grid-area: 'main-nav';
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      justify-content:space-between;
+      position: relative;      
+      background-color: #000000;
+    }
+
+    .nav-li {
+      float: right;
+      list-style-type: none;
+    }
+
+    .nav-li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .header-grid {
+      display: grid;
+      grid-template-rows: 1fr;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: 
+      "header-logo main-nav";
+      justify-content:stretch;
+      position:relative;
+    }
+
+    .header-logo {
+      grid-area: "header-logo";
+      font-family: Arial;
+      position:relative;
+      float: right;
+      background-color: #000000;
+      
     }
 
     .crime-map {
@@ -128,7 +242,6 @@ select {
       width: 100%;
       height:100%;      
       grid-area: CrimeMap;     
-      
     }
 
     .crime {
@@ -144,7 +257,8 @@ select {
       width: auto;
       column-fill: auto;
       align-content:stretch;
-      flex-wrap:wrap;    
+      flex-wrap:wrap;
+      grid-area:CrimeBarChart;    
     }
     
 

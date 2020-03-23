@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useDropdown from './components/useDropdown';
 import BarChart from './components/BarChart';
 import CrimeMap from './components/CrimeMap';
+import Header from './components/Header';
 import ChoroplethMap from './components/Choropleth';
 import "./App.scss";
 import { crimeIcon, eventRenderer, choroplethChartData, neighborhoodsChartData } from './utils/Helper.js';
@@ -33,6 +34,7 @@ export default function App() {
 
   return (
     <div className="container">
+      <Header />
       <EventDropdown />
       <CrimeMap crimeData={mapData} 
                 eventRenderer={eventRenderer} 
