@@ -3,20 +3,22 @@ import Choropleth from 'react-leaflet-choropleth';
 import hash from 'object-hash';
 import { Map, TileLayer } from 'react-leaflet';
 
-function getColor(c) {
-  return c > 200 ? '#681740' :
-         c > 100  ? '#a8234c' :
-         c > 50  ? '#e3534c' :
-         c > 25  ? '#fa7c5a' :
-         c > 5   ? '#ffa874' :
-         c >= 1   ? '#ffd08e' :
-         c === 0  ?  '#95c22b':
+
+function getColor(c,maxCount) {
+  let cV = c/maxCount;
+  return cV > .9 ? '#681740' :
+         cV > .75  ? '#a8234c' :
+         cV > .5  ? '#e3534c' :
+         cV > .3  ? '#fa7c5a' :
+         cV > .2   ? '#ffa874' :
+         cV > .1   ? '#ffd08e' :
+         cV >= .05  ?  '#95c22b':
                     '#FFFFFF';
 }
 
-function style(feature) {
+function style(feature,maxCount) {
   return {
-      fillColor: getColor(feature.properties.count),
+      fillColor: getColor(parseInt(feature.properties.count),maxCount),
       weight: 2,
       opacity: 1,
       color: 'white',
@@ -67,13 +69,16 @@ function onEachFeature(feature, layer) {
 
 const ChoroplethMap = (props) => {
   const [mapData, setMapData] = useState(props);
+  
 
   useEffect(() => {
     if (mapData.geojson !== props) {
       setMapData(props);
     }
   }, [mapData, props]);
-
+  
+const maxCount = Math.max(...mapData.geojson.features.map(hood => parseInt(hood.properties.count)));
+  
   return (
     <>
       <div className="choropleth-container">
@@ -90,7 +95,7 @@ const ChoroplethMap = (props) => {
             scale={['#b3cde0', '#011f4b']}
             steps={7}
             mode='e'
-            style={(feature) => style(feature)}
+            style={(feature) => style(feature,maxCount)}
             onEachFeature={(feature, layer) => onEachFeature(feature, layer)}
           />
         </Map>

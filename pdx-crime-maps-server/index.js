@@ -13,13 +13,14 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://34.82.83.118"); 
+/*app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); 
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-});
+});*/
 var corsOptions = {
-  origin: 'http://pdxcrimemap.net',
+  //origin: 'http://pdxcrimemap.net',
+  origin:'*',
   optionsSuccessStatus: 200
 }
 
@@ -36,6 +37,8 @@ app.get('/:crime', cors(corsOptions), db.getCrimeTweets);
 app.get('/neighborhood/:hood', cors(corsOptions), db.getHoodTweets);
 app.get('/choro/chorodata', cors(corsOptions), db.getInitChoroTweets);
 app.get('/choro/:crime', cors(corsOptions), db.getChoroTweets);
+app.get('/range/:startDate/:endDate',cors(corsOptions),db.getDateRange);
+app.get('/detailed/:startDate/:endDate/:timeHood/:timeCrime', cors(corsOptions),db.getNewHoodCrime)
 
 
 

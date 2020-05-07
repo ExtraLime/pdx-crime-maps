@@ -1,14 +1,26 @@
+
 import React, { useEffect, useState } from "react";
 import useDropdown from './components/useDropdown';
 import BarChart from './components/BarChart';
 import CrimeMap from './components/CrimeMap';
+import LineChart from './components/LineChart'
+import HoodCrimeMap from './components/HoodCrimeMap'
 import Header from './components/Header';
 import ChoroplethMap from './components/Choropleth';
+import useDateRange from './components/useDateRange'
+import useHoodCrime from './components/useHoodCrime'
 import "./App.scss";
-import { crimeIcon, eventRenderer, choroplethChartData, neighborhoodsChartData } from './utils/Helper.js';
+import { crimeIcon, eventRenderer, dateRangeChartData, choroplethChartData, neighborhoodsChartData } from './utils/Helper.js';
 import { categories, neighborhoods, entities } from './data/index';
 
-import { fetchMapData, fetchCrimeChartData, fetchNeighborhoodsData, fetchChoroplethMapData } from './utils/AsyncHelpers.js'
+import { fetchHoodCrimeData,
+         fetchNewHoodCrimeData,
+         fetchDateRangeData,
+         fetchNewDateRangeData,
+         fetchMapData,
+         fetchCrimeChartData,
+         fetchNeighborhoodsData,
+         fetchChoroplethMapData } from './utils/AsyncHelpers.js'
 
 export default function App() {
   const [crimeChartData, setCrimeChartData] = useState([]);
@@ -18,7 +30,13 @@ export default function App() {
   const [hood, NeighborhoodDropdown] = useDropdown("Neighborhood", "All", neighborhoods);
   const [mapData, setMapData] = useState([]);
   const [choroplethMapData, setCMapData] = useState(null);
-
+  const [startDate, endDate, DateRangeSelection] = useDateRange()
+  const [dateRangeData, setDateRangeData] = useState([]);
+  const [timeHood, timeCrime, HoodCrimeSelection] = useHoodCrime()
+  const [hoodCrimeData, setHoodCrimeData] = useState([]);
+  
+  
+  
   useEffect(() => {
     fetchMapData(setMapData);
     fetchCrimeChartData(setCrimeChartData, crime);
@@ -31,6 +49,23 @@ export default function App() {
   useEffect(() => {
     fetchChoroplethMapData(setCMapData, crime);
   }, [crime]);
+  
+  useEffect(() => {
+    fetchDateRangeData(setDateRangeData);
+  }, []);
+
+  useEffect(() => {
+    fetchNewDateRangeData(setDateRangeData, {startDate,endDate});
+  }, [startDate, endDate])
+
+  useEffect(() => {
+    fetchHoodCrimeData(setHoodCrimeData);
+  }, [])
+
+  useEffect(() => {
+    fetchNewHoodCrimeData(setHoodCrimeData, {timeHood,timeCrime,startDate,endDate});
+  }, [timeHood, timeCrime,startDate,endDate])
+
 
   return (
     <div className="container">
@@ -52,6 +87,21 @@ export default function App() {
                 text={neighborhoodsChartData(neighborhoodChartData, hood).datasets[0].label}
                 type="bar"
         />
+      <DateRangeSelection />
+      <HoodCrimeSelection />
+      <LineChart data={dateRangeChartData(dateRangeData)}
+                 text={`From ${startDate.toDateString()} to ${endDate.toDateString()}`}
+                 type="line"
+        />
+      <HoodCrimeMap crimeData={hoodCrimeData}
+                    eventRenderer={eventRenderer}
+                    event={event}
+                    crimeIcon={crimeIcon}
+        />
     </div>
+    
   );  
 }
+
+
+

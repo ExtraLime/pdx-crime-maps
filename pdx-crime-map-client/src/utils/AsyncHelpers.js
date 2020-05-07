@@ -38,3 +38,52 @@ export async function fetchChoroplethMapData(setCMapData, crime) {
   );
   setCMapData(result.data);
 }
+
+export async function fetchDateRangeData(setDateRangeData) {
+  const tdate = new Date()
+  const startDate = new Date(tdate.setDate(tdate.getDate()-60));
+  const endDate = new Date(tdate.setDate(tdate.getDate()+59));
+
+  const sD = await startDate.toISOString().slice(0,10);
+  const eD = await endDate.toISOString().slice(0,10);
+    
+  const result = await axios(
+    `http://${domain}:5431/range/${sD}/${eD}`,
+  );
+  setDateRangeData(result.data);
+}
+
+export async function fetchNewDateRangeData(setDateRangeData,dateRange) {
+  const { startDate, endDate } = dateRange
+  let sD, eD;
+  if (startDate !== undefined){
+    sD = await startDate.toISOString().slice(0,10);
+    eD = await endDate.toISOString().slice(0,10);
+  }
+    
+  const result = await axios(
+    `http://${domain}:5431/range/${sD}/${eD}`,
+  );
+  setDateRangeData(result.data);
+}
+
+export async function fetchHoodCrimeData(setHoodCrimeData) {
+  const result = await axios(
+    `http://${domain}:5431/hoodCrime`,
+  );
+  setHoodCrimeData(result.data);
+}
+
+export async function fetchNewHoodCrimeData(setHoodCrimeData,specs) {
+  const { timeHood, timeCrime, startDate, endDate } = specs
+  let sD, eD;
+  if (startDate !== undefined){
+    sD = await startDate.toISOString().slice(0,10);
+    eD = await endDate.toISOString().slice(0,10);
+  }
+    
+  const result = await axios(
+    `http://${domain}:5431/detailed/${sD}/${eD}/${timeHood}/${timeCrime}`,
+  );
+  setHoodCrimeData(result.data);
+}

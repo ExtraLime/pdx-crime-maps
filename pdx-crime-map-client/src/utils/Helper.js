@@ -36,3 +36,18 @@ export const neighborhoodsChartData = (data, hood) => {
             }
           ]}
 }
+export const dateRangeChartData = (data) => {
+  console.log(data)
+  return {labels: data.map(day => new Date(day.date).toISOString().slice(0,10)),
+          datasets: [
+            {
+              label: 'Daily Count',
+              backgroundColor: primaryChartColor,
+              borderColor: primaryChartColor,
+              borderWidth: 2,
+              fill: false,
+              lineTension:0.5,
+              data: data.map(day => day.count)
+            }
+          ]}
+}
