@@ -1,3 +1,5 @@
+PDX Crime Map was migrated to [A new host](https://pdx-crime-maps.herokuapp.com/)
+
 # pdx-crime-maps
 A website that visualizes live and archived crime in Portland, Or. Data Collection started around Feburary 29th, 2020.
 
